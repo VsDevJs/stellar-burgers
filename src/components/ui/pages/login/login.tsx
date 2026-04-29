@@ -8,6 +8,8 @@ import styles from '../common.module.css';
 import { Link } from 'react-router-dom';
 import { LoginUIProps } from './type';
 
+
+// ErrorText - сюда падает ошибка от сервера ?
 export const LoginUI: FC<LoginUIProps> = ({
   email,
   setEmail,

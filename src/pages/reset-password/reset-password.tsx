@@ -22,6 +22,7 @@ export const ResetPassword: FC = () => {
   };
 
   useEffect(() => {
+    // Если нет локал стореджа , то резет на заполнение мыла
     if (!localStorage.getItem('resetPassword')) {
       navigate('/forgot-password', { replace: true });
     }

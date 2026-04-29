@@ -7,6 +7,8 @@ import commonStyles from '../common.module.css';
 import { ProfileUIProps } from './type';
 import { ProfileMenu } from '@components';
 
+
+// рендерит ProfileMenu 
 export const ProfileUI: FC<ProfileUIProps> = ({
   formValue,
   isFormChanged,

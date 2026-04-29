@@ -3,13 +3,15 @@ import { useInView } from 'react-intersection-observer';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
+import { useSelector, useDispatch } from '../../services/store'; 
+import { ingredientsState, getCategoryIngredients } from '@slices'
 
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
-  const buns = [];
-  const mains = [];
-  const sauces = [];
 
+  // Нужно разбить по массивам
+  const { bun:buns = [], main:mains = [], sauce:sauces = [] } = useSelector(getCategoryIngredients);
+  
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
   const titleMainRef = useRef<HTMLHeadingElement>(null);
@@ -47,7 +49,7 @@ export const BurgerIngredients: FC = () => {
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return null;
+
 
   return (
     <BurgerIngredientsUI
