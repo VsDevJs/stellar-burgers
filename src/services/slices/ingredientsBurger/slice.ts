@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { TIngredientsState, } from './type'
 import { checkIngridients } from './actions'
 
-// Храним null или false ?;
 const initialState:TIngredientsState = { 
   ingredients:[],
   // загружены ли ингридиенты
@@ -11,9 +10,9 @@ const initialState:TIngredientsState = {
 }
 
 export const burgerIngredients = createSlice({
+  
   name:'burgerIngredients',
   initialState,
-
   reducers: {},
 
   selectors: {

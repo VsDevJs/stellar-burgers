@@ -2,12 +2,8 @@ import { forwardRef, useMemo } from 'react';
 import { TIngredientsCategoryProps } from './type';
 import { TIngredient } from '@utils-types';
 import { IngredientsCategoryUI } from '../ui/ingredients-category';
-
-// Для получения добавленых ингредиентов
-import { useSelector, useDispatch } from '../../services/store'; 
-import { burgerConstructor, getStateConstructor } from '@slices';
-
-// здесь подсчёт ингридиентов идёт (количество в виде цифры);
+import { useSelector } from '../../services/store';
+import { getStateConstructor } from '@slices';
 
 export const IngredientsCategory = forwardRef<
   HTMLUListElement,
@@ -15,13 +11,9 @@ export const IngredientsCategory = forwardRef<
 >(({ title, titleRef, ingredients }, ref) => {
 
   const burgerConstructor = useSelector(getStateConstructor);
-  /** TODO: взять переменную из стора */
-  // Нужно булочку положить по id, остальные в массив
-  // const { burgerConstructor = { bun:{_id:''}, ingredients}} = {...selector};
-
 
   const ingredientsCounters = useMemo(() => {
-    
+
     const { bun, ingredients } = burgerConstructor;
     const counters: { [key: string]: number } = {};
     ingredients.forEach((ingredient: TIngredient) => {

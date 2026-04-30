@@ -13,20 +13,12 @@ export const Login: FC = () => {
   const error = useSelector(selectError);
   const user = useSelector(selectUser);
 
-  // Отправляем логин и пароль асинхронным экшеном и диспатчим юзера если всё ок
-  // Если юзера нет, то отправляем как бы fetch (а тот уже сам проверит че да как)
-  
-
-  // Вот это можно в защитники наверное выносить...
-  // if(user)
-  //   return <Navigate to='/'/> 
-  console.log(email);
   const handleSubmit = async (e: SyntheticEvent) => {
+    
     e.preventDefault();
     await dispatch(login({email,password})).unwrap();
+
     if(user) {
-      console.log(location.state?.pathname?.from); 
-      // чтобы отправить юзера обратно на страницу , которая onlyAuth
       return <Navigate to={location.state?.pathname?.from || '/'} replace/>
     }
     

@@ -13,9 +13,8 @@ type TRefreshResponse = TServerResponse<{
   accessToken: string;
 }>;
 
-// Добавляет в объект поля refreshToken и accessToken;
+// Добавляет в объект поля refreshToken и accessToken
 // { message: Token is invalid,   success: false; }
-
 export const refreshToken = (): Promise<TRefreshResponse> =>
   fetch(`${URL}/auth/token`, {
     method: 'POST',
@@ -28,8 +27,6 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
   })
     .then((res) => checkResponse<TRefreshResponse>(res))
     .then((refreshData) => {
-
-  // success поидее должно придт из сервера в json;
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
@@ -38,35 +35,32 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
       return refreshData;
     });
 
-  // Снаяала проверяет access токен, если ошибка то потом refresh и добавляет новые access и refresh
+  // Сначала проверяет access токен, если ошибка, то потом refresh и добавляет новые access и refresh
 export const fetchWithRefresh = async <T>(
   url: RequestInfo,
   options: RequestInit
 ) => {
   try {
-
-  // При getuser возвращает что ?  
   // success + message
     const res = await fetch(url, options);
   // возвращаем json с юзером или заказами из респонса (по токену)
     return await checkResponse<T>(res);
   } catch (err:any) {
     if(err.name === 'AborError') throw err;
-    // при некорректно юзере не будет jwt ошибки, expired - истёкший токен;
+  // при некорректно юзере не будет jwt ошибки, expired - истёкший токен
     if ((err as { message: string }).message === 'jwt expired') {
 
   // Запроос рефрешь токена и получаем
       const refreshData = await refreshToken();
 
-  // Если есть headers - то добавляем в authorization новый refreshData.accessToken;
+  // Если есть headers, то добавляем в authorization новый refreshData.accessToken
       if (options.headers) {
         (options.headers as { [key: string]: string }).authorization =
           refreshData.accessToken;
       }
 
   // Заново запрашиваем уже с актуальным options headers accessToken
-  // refreshToken - вернул новые токены
-
+  // refreshToken вернул новые токены
       const res = await fetch(url, options);
       return await checkResponse<T>(res);
     } else {
@@ -122,7 +116,6 @@ type TNewOrderResponse = TServerResponse<{
 
 // Отправка ингридиентов по api и формирование заказа
 // добавил signal для отмены заказа
-
 export const orderBurgerApi = (data: string[], signal?:AbortSignal) =>
   fetchWithRefresh<TNewOrderResponse>(`${URL}/orders`, {
     method: 'POST',
@@ -143,7 +136,7 @@ type TOrderResponse = TServerResponse<{
   orders: TOrder[];
 }>;
 
-// Конкретный заказ/ Может кто угодно смотреть (наверное для ленты заказов)
+// Конкретный заказ. Может кто угодно смотреть (наверное для ленты заказов)
 export const getOrderByNumberApi = (number: number) =>
   fetch(`${URL}/orders/${number}`, {
     method: 'GET',
@@ -164,9 +157,8 @@ type TAuthResponse = TServerResponse<{
   user: TUser;
 }>;
 
-// Регистрируемся по name, pass, email;
+// Регистрируемся по name, pass, email
 // Возвращает succes и два токена + user
-
 export const registerUserApi = (data: TRegisterData) =>
   fetch(`${URL}/auth/register`, {
     method: 'POST',
@@ -207,7 +199,7 @@ export const loginUserApi = (data: TLoginData) =>
       return Promise.reject(data);
     });
 
-// Проверяет мыло и отправляет письмо
+// Проверяет email и отправляет письмо
 export const forgotPasswordApi = (data: { email: string }) =>
   fetch(`${URL}/password-reset`, {
     method: 'POST',
@@ -250,7 +242,7 @@ export const getUserApi = () =>
     } as HeadersInit
   });
 
-// Update users
+// update и возвращает скорректированные данные в json
 export const updateUserApi = (user: Partial<TRegisterData>) =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
     method: 'PATCH',
@@ -261,7 +253,7 @@ export const updateUserApi = (user: Partial<TRegisterData>) =>
     body: JSON.stringify(user)
   });
 
-// Разлогин, только удаляет на сервере токен (А у нас нет, будем удалять в thunk наверное);
+// Разлогин, только удаляет на сервере токен (А у нас нет, будем удалять locale storage + token)
 export const logoutApi = () =>
   fetch(`${URL}/auth/logout`, {
     method: 'POST',

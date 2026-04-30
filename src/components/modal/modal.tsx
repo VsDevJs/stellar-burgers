@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useLayoutEffect } from 'react';
+import { FC, memo, useLayoutEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { TModalProps } from './type';
@@ -7,16 +7,19 @@ import { ModalUI } from '@ui';
 const modalRoot = document.getElementById('modals');
 
 export const Modal: FC<TModalProps> = memo(({ title, onClose, children }) => {
-  
+
   useLayoutEffect(() => {
+
     const handleEsc = (e: KeyboardEvent) => {
       e.key === 'Escape' && onClose();
     };
 
     document.addEventListener('keydown', handleEsc);
+
     return () => {
       document.removeEventListener('keydown', handleEsc);
     };
+
   }, [onClose, title, children]);
 
   return ReactDOM.createPortal(

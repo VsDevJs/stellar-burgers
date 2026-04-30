@@ -5,13 +5,11 @@ import { forgotPasswordApi } from '@api';
 import { ForgotPasswordUI } from '@ui-pages';
 import { Preloader } from '@ui';
 
-
-// Нужно проверить существует ли в принципе такой пользователь...
 export const ForgotPassword: FC = () => {
 
   const [email, setEmail] = useState('');
   const [error, setError] = useState<Error | null>(null);
-  
+  const [isLoading, setLoading] = useState(null);
 
   const navigate = useNavigate();
 
@@ -29,12 +27,17 @@ export const ForgotPassword: FC = () => {
 
  
 
-  return (
-    <ForgotPasswordUI
-      errorText={error?.message}
-      email={email}
-      setEmail={setEmail}
-      handleSubmit={handleSubmit}
-    />
-  );
-};
+return (
+  <>
+    {isLoading && <Preloader />}
+    {!isLoading && (
+      <ForgotPasswordUI
+        errorText={error?.message}
+        email={email}
+        setEmail={setEmail}
+        handleSubmit={handleSubmit}
+      />
+    )}
+  </> 
+  )
+}

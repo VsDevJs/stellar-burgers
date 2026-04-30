@@ -14,8 +14,6 @@ export const ConstructorPage: FC = () => (
     </h1>
     <div className={`${styles.main} pl-5 pr-5`}>
       <BurgerIngredients />
-
-      {/* Нужен ли тут прелоадер ? */}
       <BurgerConstructor />
     </div>
   </main>

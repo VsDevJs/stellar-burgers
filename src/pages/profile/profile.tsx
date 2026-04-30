@@ -3,15 +3,10 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { selectUser, updateUser } from '@slices';
 import { useSelector, useDispatch } from '../../services/store'; 
 
-
-// Делаем outlet
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
 
-  // useSelector возвращает всегда туже ссылку, поэтому нт бесконечного цикла;
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  // Если user null
 
   const [formValue, setFormValue] = useState({
     name: user?.name || '',
@@ -33,9 +28,11 @@ export const Profile: FC = () => {
     formValue.email !== user?.email ||
     !!formValue.password;
 
-  // Обновляем с паролем и без
   const handleSubmit = (e: SyntheticEvent) => {
-      e.preventDefault();
+
+    e.preventDefault();
+    
+    // Логика обновления с полем пароля и без (Поскольку пароль не храниться в хранилище)
     if(!formValue.password.trim())
       dispatch(updateUser({
         password:formValue.password, 

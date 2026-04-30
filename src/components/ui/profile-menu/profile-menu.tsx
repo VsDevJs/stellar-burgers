@@ -15,7 +15,7 @@ export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({
           styles.link
         } ${isActive ? styles.link_active : ''}`
       }
-      end // - считает только точную ссылку
+      end // - только точную ссылку
     >
       Профиль
     </NavLink>

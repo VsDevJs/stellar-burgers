@@ -1,12 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { TFeedsResponse } from "@utils-types";
-import { getFeeds } from "./actions";
+import { getFeeds, getFeedOrder } from "./actions";
 
-// Что это !?;
-// import { act } from "react-dom/test-utils";
-
-// Храним null или false ?;
 const initialState:TFeedsResponse = { 
   orders:[],
   total:0,
@@ -17,13 +13,10 @@ const initialState:TFeedsResponse = {
 export const feedSlice = createSlice({
   name:'feed',
   initialState,
-
   reducers: {},
 
   selectors: {
     getOrders: (state) => state.orders,
-    getOrder: (state) => { state }, // напишем щас поиск по number , потом вынесем ниже в селектор и используем в thunk;
-    // Также сделаем общий selector для всех слайсов, там state общий короче;
     getFeedState: (state) => state,
   },
   extraReducers: (builder) => {
@@ -37,9 +30,10 @@ export const feedSlice = createSlice({
         state.total = action.payload.total;
         state.totalToday = action.payload.totalToday;
       })
+    .addCase(getFeedOrder.fulfilled, () => { 
+        
+    })
   }
 })
 
-
 export const { getOrders, getFeedState } = feedSlice.selectors;
-

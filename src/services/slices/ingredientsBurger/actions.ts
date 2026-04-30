@@ -5,20 +5,21 @@ import { TTabMode, TIngredient } from "@utils-types";
 
 export const checkIngridients = createAsyncThunk(
   "ingredients/getIngredients",
-  async () => 
+  async () =>
     getIngredientsApi()
 );
 
 export const getCategoryIngredients = createSelector(
   (state: RootState) => state.burgerIngredients.ingredients,
   (ingredients) => {
-      return ingredients.reduce((ac, el) => {
-        const type = el.type as TTabMode;
-                  
-                  if (!ac[type]) 
-                      ac[type] = [];
-                    ac[type].push(el);
-                    return ac;
-                    
-                }, {} as Record<TTabMode, TIngredient[]>);
-    });
+    return ingredients.reduce((ac, el) => {
+
+      const type = el.type as TTabMode;
+
+      if (!ac[type])
+        ac[type] = [];
+      ac[type].push(el);
+      return ac;
+
+    }, {} as Record<TTabMode, TIngredient[]>);
+  });

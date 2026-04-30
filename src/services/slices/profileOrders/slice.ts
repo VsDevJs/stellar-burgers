@@ -3,8 +3,6 @@ import { TOrdersData } from '@utils-types';
 import { fetchProfileOrders } from './action';
 
 // Пишем слайс, которые принимает заказы; 
-
-
 const initialState:TOrdersData & { isLoading:boolean, error:string }= {
   orders:[],
   total:0,
@@ -12,8 +10,6 @@ const initialState:TOrdersData & { isLoading:boolean, error:string }= {
   isLoading:false,
   error:'',
 }
-
-// Получение ордеров по кукам;
 
 export const profileOrdersSlice = createSlice({
   name: 'profileOrders',

@@ -1,12 +1,7 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
-import { Navigate } from 'react-router-dom';
-import { registerUser, selectUser, selectError } from '@slices';
+import { registerUser, selectError } from '@slices';
 import { useSelector, useDispatch } from '../../services/store';
-
-// Делаем синхронный экшен на регистрацию;
-// Редирект отсюда на предыдущую страницу;
-
 
 export const Register: FC = () => {
 

@@ -11,8 +11,7 @@ export type TIngredient = {
   image_large: string;
   image_mobile: string;
 };
-
-// Не очень понимаю зачем это ? 
+ 
 export type TConstructorIngredient = TIngredient & {
   id: string;
 };
@@ -73,4 +72,3 @@ export type TFeedsResponse = TServerResponse<{
 }>;
 
 export type TTabMode = 'bun' | 'sauce' | 'main';
-export type TStatusFeed = 'done' | 'pending';

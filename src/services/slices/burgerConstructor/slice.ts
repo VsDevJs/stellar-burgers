@@ -1,33 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TTabMode, TIngredient, TConstructorIngredient, TOrder, TNewOrderResponse } from "@utils-types";
+import { TConstructorIngredient } from "@utils-types";
+import { TBurgerState } from './type';
 import { createOrder } from './action';
 
-// orderModalData - Какой-то тип для модалки (данные походу)
-
-type TBurgerState = {
-  ingredients:TConstructorIngredient[],
-  bun: TConstructorIngredient | null,
-  orderRequest:boolean,
-  orderModalData:null | TNewOrderResponse,
-}
-
 const initialState:TBurgerState = {
-
-  // Сюда добавляем ингридиенты;
   bun: null,
-
   ingredients:[],
-
+  
   // Для прелоадера;
   orderRequest:false,
 
   // Данные для модального окна;
   orderModalData:null,
 }
-
-/** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-// Делаем селектор чтобы взять ингридиент , т.к не требуется диспатча
-
 
 export const burgerConstructor = createSlice({
 
@@ -55,8 +40,6 @@ export const burgerConstructor = createSlice({
         state.ingredients[number - 1],
         ...state.ingredients.slice(number + 1)
       ]
-
-      //[...a.slice(0,2-1),a[2],a[1],...a.slice(2+1,)]; 
     },
 
     moveDown: (state, action:PayloadAction<number>) => {
@@ -70,17 +53,12 @@ export const burgerConstructor = createSlice({
       ]
     },
 
-    // clearModal
     clearModal:(state)=> { state.orderModalData = null },
 
   },
-  // селекторы вызывают для получения состояния и не должны менять state
+
   selectors: {
     getStateConstructor:(state) => state,
-    getIngredient: (state, id:string) => {
-      console.log(state.ingredients);
-      return state.ingredients.find(el => el._id == id);
-    }
   },
 
   extraReducers: (builder) => {
@@ -101,4 +79,4 @@ export const burgerConstructor = createSlice({
 
 
 export const { setIngredient, deleteIngredient, clearModal, moveDown, moveUp } = burgerConstructor.actions;
-export const { getStateConstructor, getIngredient } = burgerConstructor.selectors;
+export const { getStateConstructor } = burgerConstructor.selectors;

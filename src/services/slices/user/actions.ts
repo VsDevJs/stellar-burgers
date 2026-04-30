@@ -1,12 +1,9 @@
-import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserApi, registerUserApi, loginUserApi, logoutApi, TLoginData, refreshToken, TRegisterData, updateUserApi,
 deleteCookie
 } from '@api';
-import { TUser } from '@utils-types';
 import { setUser, setAuthChecked } from '@slices';
 
-// Проверяем юзера на то, есть ли он в системе;
-// fetchWithRefresh в getUserApi возвращает success;
 export const checkUserAuth = createAsyncThunk(
   'user/checkAuth',
   async (_, { dispatch, rejectWithValue }) => {
@@ -27,12 +24,12 @@ export const checkUserAuth = createAsyncThunk(
   }
 );
 
-// Кладём токен в 
 export const login = createAsyncThunk("user/login", 
   async (data:TLoginData) => {
 
     // Сначала getUserApi (проверяет, что нет токенов) если его нет, то уже loginUserApi
-    return await loginUserApi(data); // записал в куки и в локал сторедж в utils.ts;
+    // записал в куки и в локал сторедж в utils.ts
+    return await loginUserApi(data);
 
 });
 
@@ -53,7 +50,6 @@ export const registerUser = createAsyncThunk('user/register',
     await registerUserApi(data)
 )
 
-// 
 export const updateUser = createAsyncThunk('user/update',
   async (data:Partial<TRegisterData>) => {
 

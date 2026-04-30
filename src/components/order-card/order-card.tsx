@@ -10,10 +10,11 @@ import { getIngridients } from '@slices';
 const maxIngredients = 6;
 
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
+
   const location = useLocation();
+  
+  // Возвращает туже ссылку, поэтому зависимость не сработает, зацикленно 
   const ingredients = useSelector(getIngridients);
-  /** TODO: взять переменную из стора */
-  // const ingredients: TIngredient[] = [];
 
   const orderInfo = useMemo(() => {
     if (!ingredients.length) return null;

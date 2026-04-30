@@ -11,8 +11,6 @@ import {
   ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
 
-// Здесь видимо нужно настроить Navlink  и передавать state, если есть какие-то данные;
-
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
   <header className={styles.header}>
     <nav className={`${styles.menu} p-4`}>

@@ -2,9 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { TUser } from "@utils-types";
 import { login, logout, updateUser, registerUser } from "./actions";
 import { TUserState } from '@slices'
-import { act } from "react-dom/test-utils";
-
-const authThunks = [login, logout, updateUser, registerUser] as const;
 
 export const initialState: TUserState = {
   user: null,
@@ -13,6 +10,7 @@ export const initialState: TUserState = {
   error:'',
 };
 
+// Сделан общий addMatcher для reject состояния
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -35,7 +33,6 @@ export const userSlice = createSlice({
   
   extraReducers: (builder) => {
     builder
-      // Авторизация юзера
       .addCase(login.pending, (state, action) => {
         state.isLoading = true;
         state.isAuthChecked = false;
@@ -45,24 +42,16 @@ export const userSlice = createSlice({
         state.error = '';
         state.isAuthChecked = true;
         state.isLoading = false;
-      
       })
-
-      // Разлогин юзера
       .addCase(logout.pending, (state, action) => {
         state.error = '';
         state.isLoading = true;
       })
-      
       .addCase(logout.fulfilled, (state, action) => {
-        
         if(action.payload?.success)
           state.user = null;
         state.isLoading = false;
-        console.log(state.user);
       })
-
-      // Обновление юзера
       .addCase(updateUser.pending, (state, action) => {
         state.isLoading = true;
       })
@@ -70,8 +59,6 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
         state.isLoading = false;
       })
-      
-      // регистрация юзера
       .addCase(registerUser.pending,(state, action) => {
         state.isLoading = true;
       })
