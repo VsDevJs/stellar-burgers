@@ -1,10 +1,11 @@
-import { FC, useMemo, useState, useRef, useEffect } from 'react';
+import { FC, useMemo, useRef, useEffect } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 
 import { useSelector, useDispatch } from '../../services/store';
 import { getStateConstructor, createOrder, clearModal } from '@slices';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { selectUser } from '@slices';
 
 export const BurgerConstructor: FC = () => {
 
@@ -12,7 +13,7 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const user = useSelector(selectUser);
   /* Для отмены запроса http */
   const orderPromise = useRef<{ abort: () => void } | null>(null);
 
@@ -33,10 +34,18 @@ export const BurgerConstructor: FC = () => {
     if (!constructorItems.bun || orderRequest)
       return;
 
-    const map = [...constructorItems.ingredients, constructorItems.bun].map(el => el._id);
-    const p = dispatch(createOrder(map));
+    if (!user)
+      return navigate('/login');
 
+    const map = [
+      constructorItems.bun,
+      ...constructorItems.ingredients,
+      constructorItems.bun].map(el => el._id);
+
+    const p = dispatch(createOrder(map));
+    console.log('Ордер сформирован:', p);
     orderPromise.current = p;
+
   };
 
   const closeOrderModal = () => {

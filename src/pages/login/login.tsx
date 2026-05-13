@@ -8,19 +8,20 @@ export const Login: FC = () => {
   
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState('');
-  const location = useLocation()
+  // const location = useLocation()
   const dispatch = useDispatch();
   const error = useSelector(selectError);
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     
     e.preventDefault();
     await dispatch(login({email,password})).unwrap();
 
-    if(user) {
-      return <Navigate to={location.state?.pathname?.from || '/'} replace/>
-    }
+    // if(user) {
+    //  Возвращаем туда, откуда пришли. Или , если неоткуда, то наглавную 
+    //  return <Navigate to={location.state?.pathname?.from || '/'} replace/>
+    // }
     
   };
 

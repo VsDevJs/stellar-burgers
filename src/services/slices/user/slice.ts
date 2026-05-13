@@ -3,6 +3,7 @@ import { TUser } from "@utils-types";
 import { login, logout, updateUser, registerUser } from "./actions";
 import { TUserState } from '@slices'
 
+// checkUserAuth ставиться благодаря async thunk checkAuthUser
 export const initialState: TUserState = {
   user: null,
   isAuthChecked: false,
@@ -33,7 +34,7 @@ export const userSlice = createSlice({
   
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state, action) => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.isAuthChecked = false;
       })

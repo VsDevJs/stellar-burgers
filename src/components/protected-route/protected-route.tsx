@@ -8,12 +8,15 @@ type ProtectedRouteProps = {
   children: React.JSX.Element
 };
 
+// Если пользователь авторизован, то выбиваем из register
+
 export const ProtectedRoute = ({
   onlyUnAuth = false,
   children,
 }: ProtectedRouteProps): React.JSX.Element => {
 
   const user = useSelector(selectUser);
+  // Устанавливается с помощью checkUserAuth из хранилища user
   const isAuthChecked = useSelector(selectIsAuthChecked);
   const isLoading = useSelector(selectIsLoading);
   const location = useLocation();
@@ -22,15 +25,22 @@ export const ProtectedRoute = ({
     return <Preloader />
   }
 
+  // Для зареганных
   if (!onlyUnAuth && !user && isAuthChecked) {
+    // Открываем profile/orders/number - редирект на login (+ сохранение локации в from)
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // для не зареганных
   if (onlyUnAuth && isAuthChecked && user) {
-    const from = location.state?.from?.pathname ?? "/";
+
+    // Перебрасывает туда, откуда пришёл location
+    const from = location.state?.from?.pathname ?? '/';
+
     return <Navigate to={from} replace />;
   }
 
+  // возвращает на login (children-ом);
   return children;
 
 };

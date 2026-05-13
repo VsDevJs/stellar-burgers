@@ -232,9 +232,8 @@ export const resetPasswordApi = (data: { password: string; token: string }) =>
 
 export type TUserResponse = TServerResponse<{ user: TUser }>;
 
-// Получаем ответ валиден ли accessToken токен юзера 
-// Юзера и поле success - true или поле success false;
-// Берёт юзера и проверяет по токену 
+
+// Возвращает юзера и нновые токены благодаря refresh или ошибку;
 export const getUserApi = () =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
     headers: {

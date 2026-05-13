@@ -7,7 +7,8 @@ import {
   ResetPassword,
   NotFound404,
   Profile,
-  ProfileOrders
+  ProfileOrders,
+  Register
 } from '@pages';
 
 import '../../index.css';
@@ -40,9 +41,7 @@ const App = () => {
 
   const { isIngredientsLoading, ingredients, error } = useSelector(ingredientsState);
   const location = useLocation();
-
   const background = location.state?.background;
-  const redirect = location.state?.from;
 
   // Когда заказ сформируется, можно отправить ссылку кому-нибудь
   const orderResponse = location.state?.fromModal;
@@ -65,7 +64,7 @@ const App = () => {
         </div>
       ) : ingredients.length > 0 ? (
         <>
-          <Routes location={orderResponse || background || location || redirect}>
+          <Routes location={orderResponse || background || location}>
             <Route path='/' element={<ConstructorPage />} />
             <Route path={'/feed'} element={<Feed />} />
             <Route path="/feed/:number" element={<OrderInfo />} />
@@ -75,6 +74,12 @@ const App = () => {
               <ProtectedRoute onlyUnAuth>
                 <Login />
               </ProtectedRoute>} />
+
+            <Route path='/register' element={
+              <ProtectedRoute onlyUnAuth>
+                <Register />
+              </ProtectedRoute>} />
+
             <Route path='/forgot-password' element={
               <ProtectedRoute onlyUnAuth>
                 <ForgotPassword />

@@ -29,7 +29,7 @@ export const burgerConstructor = createSlice({
     },
 
     deleteIngredient: (state, action: PayloadAction<TConstructorIngredient>) => {
-      state.ingredients = state.ingredients.filter(el => el._id != action.payload._id)
+      state.ingredients = state.ingredients.filter(el => el.id != action.payload.id)
     },
 
     moveUp: (state, action:PayloadAction<number>) => {
