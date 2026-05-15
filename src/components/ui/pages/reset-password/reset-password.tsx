@@ -5,7 +5,7 @@ import {
   PasswordInput
 } from '@zlden/react-developer-burger-ui-components';
 import styles from '../common.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ResetPasswordUIProps } from './type';
 
 export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
@@ -15,7 +15,11 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
   handleSubmit,
   token,
   setToken
-}) => (
+}) => {
+
+const location = useLocation();
+
+return (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
       <h3 className='pb-6 text text_type_main-medium'>Восстановление пароля</h3>
@@ -56,10 +60,11 @@ export const ResetPasswordUI: FC<ResetPasswordUIProps> = ({
       </form>
       <div className={`${styles.question} text text_type_main-default pb-6`}>
         Вспомнили пароль?
-        <Link to='/login' className={`pl-2 ${styles.link}`}>
+        <Link to='/login' state={location.state} className={`pl-2 ${styles.link}`}>
           Войти
         </Link>
       </div>
     </div>
   </main>
 );
+}

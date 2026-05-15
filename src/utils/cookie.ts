@@ -11,8 +11,8 @@ export function getCookie(name: string): string | undefined {
 }
 
 export function setCookie(
-  name: string,
-  value: string,
+  name: string, // access
+  value: string, // 
   props: { [key: string]: string | number | Date | boolean } = {}
 ) {
   props = {
@@ -30,8 +30,11 @@ export function setCookie(
   if (exp && exp instanceof Date) {
     props.expires = exp.toUTCString();
   }
+  // Кодирует символы (пробелы табуляции и тд);
   value = encodeURIComponent(value);
   let updatedCookie = name + '=' + value;
+
+  // Если есть пропсы (expires, max-age), то их перебирает и обновляет куку;
   for (const propName in props) {
     updatedCookie += '; ' + propName;
     const propValue = props[propName];
@@ -45,3 +48,5 @@ export function setCookie(
 export function deleteCookie(name: string) {
   setCookie(name, '', { expires: -1 });
 }
+
+
