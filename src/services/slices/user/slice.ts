@@ -44,7 +44,7 @@ export const userSlice = createSlice({
         state.isAuthChecked = true;
         state.isLoading = false;
       })
-      .addCase(logout.pending, (state, action) => {
+      .addCase(logout.pending, (state) => {
         state.error = '';
         state.isLoading = true;
       })
@@ -53,19 +53,19 @@ export const userSlice = createSlice({
           state.user = null;
         state.isLoading = false;
       })
-      .addCase(updateUser.pending, (state, action) => {
+      .addCase(updateUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.isLoading = false;
       })
-      .addCase(registerUser.pending,(state, action) => {
+      .addCase(registerUser.pending,(state) => {
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled,(state, action) => {
         state.error = '';
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.isLoading = false;
       })
       .addMatcher(

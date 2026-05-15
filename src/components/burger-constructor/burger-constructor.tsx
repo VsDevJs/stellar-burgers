@@ -43,7 +43,6 @@ export const BurgerConstructor: FC = () => {
       constructorItems.bun].map(el => el._id);
 
     const p = dispatch(createOrder(map));
-    console.log('Ордер сформирован:', p);
     orderPromise.current = p;
 
   };

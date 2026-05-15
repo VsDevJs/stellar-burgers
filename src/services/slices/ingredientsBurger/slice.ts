@@ -4,7 +4,7 @@ import { checkIngridients } from './actions'
 
 const initialState:TIngredientsState = { 
   ingredients:[],
-  // загружены ли ингридиенты
+  // загружены ли ингредиенты
   isIngredientsLoading:false,
   error:undefined,
 }
@@ -21,7 +21,6 @@ export const burgerIngredients = createSlice({
     getIngridients: (state) => state.ingredients,
 
     getIngredient: (state, id:string) => {
-      console.log(state.ingredients);
       return state.ingredients.find(el => el._id == id);
     }
   },

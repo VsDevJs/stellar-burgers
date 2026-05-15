@@ -3,15 +3,16 @@ import { getUserApi, registerUserApi, loginUserApi, logoutApi, TLoginData, refre
 deleteCookie
 } from '@api';
 import { setUser, setAuthChecked } from '@slices';
+import { setCookie } from '../../../utils/cookie';
 
 // Проверяет юзера
 export const checkUserAuth = createAsyncThunk(
   'user/checkAuth',
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      
+
       const responseUser = await getUserApi();
-      // Если юзер авторизован (проверка токенов через getUserApi)
+      
       if (responseUser.success) {
         dispatch(setUser(responseUser.user));
       }
@@ -21,7 +22,6 @@ export const checkUserAuth = createAsyncThunk(
       // 
       return rejectWithValue(err);
     } finally {
-      // в любом случае сделали проверку на авторизацию = true;
       dispatch(setAuthChecked(true));
     }
   }
@@ -29,9 +29,7 @@ export const checkUserAuth = createAsyncThunk(
 
 export const login = createAsyncThunk("user/login", 
   async (data:TLoginData) => {
-
-    // Сначала getUserApi (проверяет, что нет токенов) если его нет, то уже loginUserApi
-    // записал в куки и в локал сторедж в utils.ts
+    
     return await loginUserApi(data);
 
 });
@@ -49,8 +47,14 @@ export const logout = createAsyncThunk("user/logout",
 );
 
 export const registerUser = createAsyncThunk('user/register',
-  async (data:TRegisterData) =>
-    await registerUserApi(data)
+  async (data:TRegisterData) => {
+
+    const resp = await registerUserApi(data)
+    localStorage.setItem('refreshToken', resp.refreshToken);
+    setCookie('accessToken', resp.accessToken);
+
+    return resp.user;
+  }
 )
 
 export const updateUser = createAsyncThunk('user/update',

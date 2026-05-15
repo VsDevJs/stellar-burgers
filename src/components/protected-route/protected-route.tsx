@@ -32,11 +32,12 @@ export const ProtectedRoute = ({
   }
 
   // для не зареганных
+  // здесь регистер не работает;
   if (onlyUnAuth && isAuthChecked && user) {
 
-    // Перебрасывает туда, откуда пришёл location
+    // Перебрасывает туда, откуда пришли
     const from = location.state?.from?.pathname ?? '/';
-
+    console.log('РЕДИРЕКТ ИЗ FROM', from);
     return <Navigate to={from} replace />;
   }
 
