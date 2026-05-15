@@ -8,8 +8,6 @@ type ProtectedRouteProps = {
   children: React.JSX.Element
 };
 
-// Если пользователь авторизован, то выбиваем из register
-
 export const ProtectedRoute = ({
   onlyUnAuth = false,
   children,
@@ -32,16 +30,13 @@ export const ProtectedRoute = ({
   }
 
   // для не зареганных
-  // здесь регистер не работает;
   if (onlyUnAuth && isAuthChecked && user) {
 
     // Перебрасывает туда, откуда пришли
     const from = location.state?.from?.pathname ?? '/';
-    console.log('РЕДИРЕКТ ИЗ FROM', from);
     return <Navigate to={from} replace />;
   }
 
-  // возвращает на login (children-ом);
   return children;
 
 };
